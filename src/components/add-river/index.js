@@ -1,0 +1,31 @@
+import React, {Component} from "react"
+import autoBind from 'react-autobind'
+import AddRiver from "./AddRiver"
+
+export default class AddRiverContainer extends Component {
+  constructor(){
+    super()
+    this.state = {input: "", buttonText: "Add River"}
+    autoBind(this)
+  }
+
+  handleChange(e){
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleSubmit(e){
+    e.preventDefault()
+    this.setState({buttonText: "Add Another River"})
+  }
+
+  render(){
+    return(
+        <AddRiver
+          buttonText={this.state.buttonText}
+          input={this.state.input}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+    )
+  }
+}
