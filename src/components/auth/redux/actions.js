@@ -1,6 +1,7 @@
 import axios from "axios"
 const baseURL = process.env.BASE_URL || "http://localhost:8000/"
 
+
 //AUTHORIZATION
 
 axios.interceptors.request.use(config => {
@@ -15,8 +16,8 @@ export function signup(credentials) {
     return (dispatch) => {
         axios.post(`${baseURL}auth/signup`, credentials)
             .then((response) => {
-                console.log(response.data, "succesful signup");
-                dispatch(login(credentials));
+                console.log(response.data, "succesful signup")
+                dispatch(login(credentials))
             })
             .catch((err) => {
                 console.dir(err);
@@ -35,8 +36,9 @@ export function login(credentials) {
             .then((response) => {
                 dispatch({
                   type: "LOGIN",
-                  data: response.data
-                });
+                  data: response.data,
+                  favorites: response.data.user.favoriteStreams
+                })
             })
             .catch((err) => {
                 console.error(err);

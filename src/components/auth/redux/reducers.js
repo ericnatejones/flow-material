@@ -9,6 +9,7 @@ let defaultState = {
     signupError: "",
     user: {
         username: localStorage.username,
+        favorites: []
     }
 };
 
@@ -19,13 +20,13 @@ const authReducer = function (state = defaultState, action) {
                 ...state
             }
         case "LOGIN":
-            localStorage.setItem("token", action.data.token);
-            localStorage.setItem("username", action.data.user.username);
+            localStorage.setItem("token", action.data.token)
+            localStorage.setItem("username", action.data.user.username)
             return {
                 ...state,
                 user: {
                     username: action.data.user.username,
-                    name: action.data.user.name
+                    favorites: action.data.user.favoriteStreams
                 },
                 isAuthenticated: true,
                 isAdmin: action.data.user.admin,

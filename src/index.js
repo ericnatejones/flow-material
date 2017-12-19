@@ -10,7 +10,7 @@ import authReducer from "./components/auth/redux/reducers"
 
 import App from './components/App'
 
-const reducer = combineReducers({riversReducer, authReducer})
+const reducer = combineReducers({rivers: riversReducer, user: authReducer})
 
 const store = createStore(reducer, applyMiddleware(thunk))
 

@@ -2,10 +2,54 @@
 import axios from "axios"
 const baseURL = process.env.BASE_URL || "http://localhost:8000/"
 
-function RiversReducer(rivers = [], action) {
+function combineFavoritesAndRivers(favorites, rivers){
+  const favoriteIDs = favorites.map(favorite=>{
+    return favorite.stream
+  })
+
+  for (let i = 0; i < rivers.length; i++){
+    let index = favoriteIDs.indexOf(rivers[i]._id)
+    if(index >= 0){
+      rivers[i].lowerParam = favorites[index].lowerParam
+      rivers[i].upperParam = favorites[index].upperParam
+      rivers[i].isFavorited = true
+    } else {
+      rivers[i].isFavorited = false
+    }
+  }
+  return rivers
+}
+
+function riverSort(a, b){
+  if(a.isFavorited){
+    return -1
+  } else {
+    return 1
+  }
+}
+
+function riversReducer(rivers = [], action) {
+
   switch (action.type) {
     case "LOAD_RIVERS":
       return [...rivers, ...action.rivers]
+    case "LOGIN":
+      const combinedRivers = combineFavoritesAndRivers(action.favorites, rivers).sort(riverSort)
+      return combinedRivers || rivers
+    case "LOAD_FAVORITES":
+      const favorites = action.favorites.map(({stream, upperParam, lowerParam})=>{
+        return {
+          stream: stream._id,
+          upperParam,
+          lowerParam
+        }
+      })
+      const combinedAndMappedRivers = combineFavoritesAndRivers(favorites, rivers).sort(riverSort)
+      return combinedRivers || rivers
+    case "UPDATE_FLOW":
+      const riverToUpdate = rivers.find(river=>river.apiId === action.id)
+      riverToUpdate.flow = action.flow
+      return rivers 
     default:
       return rivers
   }
@@ -26,4 +70,27 @@ export function loadRivers() {
   }
 }
 
-export default RiversReducer
+export function updateFlow(flow, id){
+  return {
+    type: "UPDATE_FLOW",
+    id,
+    flow
+  }
+}
+
+export function loadFavorites() {
+  return (dispatch) => {
+    axios.get(`${baseURL}api/favorite`)
+    .then((response) => {
+      dispatch({
+        type: "LOAD_FAVORITES",
+        favorites: response.data.favoriteStreams
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }
+}
+
+export default riversReducer

@@ -35,7 +35,6 @@ class AuthContainer extends Component{
     return {open: !prevState.open}
   })
 
-
   handleSubmit({username, password}, type){
     this.props[type]({
       username,
@@ -47,7 +46,7 @@ class AuthContainer extends Component{
 
     return (
       <div>
-        {this.props.authReducer.isAuthenticated ? <div style={logout}><LogoutContainer /></div> :
+        {this.props.user.isAuthenticated ? <div style={logout}><LogoutContainer /></div> :
           <div>
         <RaisedButton
           label="Log In/Sign Up"
