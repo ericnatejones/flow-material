@@ -13,7 +13,7 @@ export default function River(props){
     }
   }
 
-  const flowText = props.river.flow === "FROZEN" ? props.river.flow : props.river.flow + " cfs"
+  const flowText = props.river.flow < 0  ? "FROZEN" : props.river.flow + " cfs"
 
   return (
     <div>

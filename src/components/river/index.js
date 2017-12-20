@@ -20,7 +20,7 @@ class RiverContainer extends Component{
     loadRiverData(this.props.river.apiId).then((response) => {
       let flow = response.data.value.timeSeries[0].values[0].value[0].value
       let apiId = response.data.value.timeSeries[0].sourceInfo.siteCode[0].value
-      updateFlow(flow, apiId)
+      this.props.updateFlow(flow, apiId)
     })
   }
 

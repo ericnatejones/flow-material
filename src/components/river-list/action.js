@@ -21,7 +21,24 @@ function combineFavoritesAndRivers(favorites, rivers){
 }
 
 function riverSort(a, b){
-  if(a.isFavorited){
+  const aFlow = Number(a.flow)
+  const bFlow = Number(b.flow)
+  if(a.isFavorited && b.isFavorited){
+    if (aFlow >= 0 && bFlow <= 0){
+      return -1
+    }
+    if (aFlow > a.lowerParam &&
+      aFlow < a.upperParam &&
+      (bFlow < b.lowerParam ||
+      bFlow > b.upperParam)
+    ){
+      return -1
+    } else if(aFlow > a.upperParam && bFlow < b.lowerParam){
+      return -1
+    } else {
+      return 1
+    }
+  } else if(a.isFavorited && !b.isFavorited){
     return -1
   } else {
     return 1
@@ -34,7 +51,7 @@ function riversReducer(rivers = [], action) {
     case "LOAD_RIVERS":
       return [...rivers, ...action.rivers]
     case "LOGIN":
-      const combinedRivers = combineFavoritesAndRivers(action.favorites, rivers).sort(riverSort)
+      const combinedRivers = combineFavoritesAndRivers(action.favorites, rivers)
       return combinedRivers || rivers
     case "LOAD_FAVORITES":
       const favorites = action.favorites.map(({stream, upperParam, lowerParam})=>{
@@ -44,12 +61,17 @@ function riversReducer(rivers = [], action) {
           lowerParam
         }
       })
-      const combinedAndMappedRivers = combineFavoritesAndRivers(favorites, rivers).sort(riverSort)
-      return combinedRivers || rivers
+      const combinedAndMappedRivers = combineFavoritesAndRivers(favorites, rivers)
+      return combinedAndMappedRivers || rivers
     case "UPDATE_FLOW":
-      const riverToUpdate = rivers.find(river=>river.apiId === action.id)
-      riverToUpdate.flow = action.flow
-      return rivers 
+      const index = rivers.findIndex(river=>river.apiId === action.id)
+      const riversCopy = [...rivers]
+      riversCopy[index].flow = action.flow
+      console.log(riversCopy)
+      return riversCopy
+    case "SORT_RIVERS":
+        const sortedRivers = rivers.sort(riverSort)
+        return sortedRivers
     default:
       return rivers
   }
@@ -90,6 +112,12 @@ export function loadFavorites() {
     .catch((err) => {
       console.error(err);
     })
+  }
+}
+
+export function sortRivers(){
+  return {
+    type: "SORT_RIVERS"
   }
 }
 
