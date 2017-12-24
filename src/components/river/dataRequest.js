@@ -1,8 +1,6 @@
-// get rivers information
 import axios from "axios"
-// function to favorite rivers
+const baseURL = process.env.BASE_URL || "http://localhost:8000/"
 
-// get list rivers with just an id and an "isFavorited"
 const axiosNoHeader = axios.create();
 
 export function loadRiverData(apiId) {
@@ -10,4 +8,13 @@ export function loadRiverData(apiId) {
   const site = apiId
   const param = '&parameterCd=00060'
   return axiosNoHeader.get(url+site+param)
+}
+
+export function updateParam(which, streamId, param) {
+  if (!isNaN(param)){
+    axios.put(baseURL+"api/favorite/param/"+which+streamId, { param })
+    .then((response) => {
+      console.log(response)
+    })
+  }
 }

@@ -12,7 +12,7 @@ import App from './components/App'
 
 const reducer = combineReducers({rivers: riversReducer, user: authReducer})
 
-const store = createStore(reducer, applyMiddleware(thunk))
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk))
 
 ReactDOM.render(
     <Provider store={store}>

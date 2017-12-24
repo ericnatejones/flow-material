@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import Form from "./Form"
-import autoBind from 'react-autobind';
+import autoBind from 'react-autobind'
 
 export default class FormContainer extends Component{
   constructor(){

@@ -9,7 +9,6 @@ let defaultState = {
     signupError: "",
     user: {
         username: localStorage.username,
-        favorites: []
     }
 };
 
@@ -26,7 +25,6 @@ const authReducer = function (state = defaultState, action) {
                 ...state,
                 user: {
                     username: action.data.user.username,
-                    favorites: action.data.user.favoriteStreams
                 },
                 isAuthenticated: true,
                 isAdmin: action.data.user.admin,
@@ -45,6 +43,7 @@ const authReducer = function (state = defaultState, action) {
                 isAuthenticated: false,
                 isAdmin: false
             }
+
         case "ERROR":
             return {
               ...state,

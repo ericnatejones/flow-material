@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import RiverList from "./RiverList"
-import {loadRivers, loadFavorites, sortRivers} from "./action"
+import {loadRivers, loadFavorites} from "./action"
 import { connect } from "react-redux"
 
 class RiverListContainer extends Component{
@@ -12,8 +12,8 @@ class RiverListContainer extends Component{
   }
 
   render(){
-    return <div><button onClick={this.props.sortRivers}>sort</button><RiverList rivers={this.props.rivers} /></div>
+    return <RiverList rivers={this.props.rivers} />
   }
 }
 
-export default connect(state => state, { loadRivers, loadFavorites, sortRivers }) (RiverListContainer);
+export default connect(state => state, { loadRivers, loadFavorites }) (RiverListContainer);
