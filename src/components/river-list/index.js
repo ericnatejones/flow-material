@@ -2,8 +2,18 @@ import React, {Component} from "react"
 import RiverList from "./RiverList"
 import {loadRivers, loadFavorites} from "./action"
 import { connect } from "react-redux"
+import autoBind from 'react-autobind'
+
 
 class RiverListContainer extends Component{
+  constructor(){
+    super()
+    this.state = {
+      search: ""
+    }
+    autoBind(this)
+  }
+
   componentDidMount() {
     this.props.loadRivers()
     if (this.props.user.isAuthenticated){
@@ -11,8 +21,16 @@ class RiverListContainer extends Component{
     }
   }
 
+  handleChange(e) {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
   render(){
-    return <RiverList rivers={this.props.rivers} />
+    return <RiverList
+      search={this.state.search}
+      rivers={this.props.rivers}
+      handleChange={this.handleChange}
+      />
   }
 }
 

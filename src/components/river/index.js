@@ -38,20 +38,18 @@ class RiverContainer extends Component{
   }
 
   handleChange(e) {
-    e.persist();
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }
-    })
+    this.setState({[e.target.name]: e.target.value})
   }
 
   render(){
     let backgroundColor = "white"
 
     if(this.props.river.isFavorited){
-      backgroundColor = assignColor(this.props.river.flow, this.props.river.upperParam, this.props.river.lowerParam)
+      backgroundColor = assignColor(
+        this.props.river.flow,
+        this.state.upperParam || this.props.river.upperParam,
+        this.state.lowerParam || this.props.river.lowerParam
+      )
     }
 
     return <River

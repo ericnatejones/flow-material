@@ -18,6 +18,7 @@ function combineFavoritesAndRivers(favorites, rivers){
       rivers[i].isFavorited = false
     }
   }
+
   return rivers
 }
 
