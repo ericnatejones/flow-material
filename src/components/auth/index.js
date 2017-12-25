@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from "react-redux"
 import autoBind from 'react-autobind'
 import LogoutContainer from "./logout"
-import { signup, login } from "./redux/actions"
+import { signup, login } from "../../redux/auth/actions"
 
 const button = {
   right: 0,

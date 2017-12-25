@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import RiverList from "./RiverList"
-import {loadRivers, loadFavorites} from "./action"
+import {loadRivers, loadFavorites} from "../../redux/rivers/actions"
 import { connect } from "react-redux"
 import autoBind from 'react-autobind'
 

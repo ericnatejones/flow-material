@@ -5,8 +5,8 @@ import thunk from "redux-thunk"
 import { createStore, applyMiddleware, combineReducers } from "redux"
 import { Provider } from "react-redux"
 
-import riversReducer from "./components/river-list/action"
-import authReducer from "./components/auth/redux/reducers"
+import riversReducer from "./redux/rivers/reducers"
+import authReducer from "./redux/auth/reducers"
 
 import ReduxToastr, {reducer as toastrReducer} from 'react-redux-toastr'
 

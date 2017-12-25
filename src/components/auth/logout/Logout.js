@@ -1,6 +1,6 @@
 import React from "react"
 import RaisedButton from 'material-ui/RaisedButton'
-import { logout } from "../redux/actions"
+import { logout } from "../../../redux/auth/actions"
 import { connect } from "react-redux"
 
 function Logout(props){

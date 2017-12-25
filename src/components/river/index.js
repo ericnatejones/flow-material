@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import River from "./River"
 import {loadRiverData, updateParam} from "./dataRequest"
-import {updateFlow, favorite, unFavorite} from "../river-list/action"
+import {updateFlow, favorite, unFavorite} from "../../redux/rivers/actions"
 import { connect } from "react-redux"
 import autoBind from 'react-autobind'
 import {toastr} from 'react-redux-toastr'
