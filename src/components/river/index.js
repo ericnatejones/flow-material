@@ -4,6 +4,7 @@ import {loadRiverData, updateParam} from "./dataRequest"
 import {updateFlow, favorite, unFavorite} from "../river-list/action"
 import { connect } from "react-redux"
 import autoBind from 'react-autobind'
+import {toastr} from 'react-redux-toastr'
 
 function assignColor(flow, upper, lower){
   if (flow === "FROZEN") return "#A5F2F3"
@@ -18,6 +19,7 @@ function assignColor(flow, upper, lower){
 class RiverContainer extends Component{
   constructor(props){
     super(props)
+
     this.state = {
       upperParam: props.river.upperParam,
       lowerParam: props.river.lowerParam
@@ -34,6 +36,7 @@ class RiverContainer extends Component{
   }
 
   handleBlurAndSaveParam(e){
+    toastr.success('parameter saved')
     updateParam(e.target.name+"/", this.props.river.updateId, parseInt(e.target.value, 10))
   }
 

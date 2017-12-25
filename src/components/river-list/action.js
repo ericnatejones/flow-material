@@ -1,5 +1,7 @@
 // get list rivers with just an id and an "isFavorited"
 import axios from "axios"
+import {toastr} from 'react-redux-toastr'
+
 const baseURL = process.env.BASE_URL || "http://localhost:8000/"
 
 function combineFavoritesAndRivers(favorites, rivers){
@@ -113,6 +115,7 @@ export function loadRivers() {
     })
     .catch((err) => {
       console.error(err);
+      toastr.error(err.response.data.message)
     })
   }
 }
@@ -135,7 +138,8 @@ export function loadFavorites() {
       });
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err)
+      toastr.error(err.response.data.message)
     })
   }
 }
@@ -144,13 +148,14 @@ export function favorite(_id){
   return (dispatch) => {
     axios.post(`${baseURL}api/favorite`, {_id})
     .then((response) => {
-        dispatch({
-            type: "FAVORITE",
-            favorites: response.data.favoriteStreams
-        });
+      dispatch({
+        type: "FAVORITE",
+        favorites: response.data.favoriteStreams
+      })
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err)
+      toastr.error("River Already Favorited", "Refresh your browser. I'm working on this bug currently")
     })
   }
 }
@@ -166,7 +171,8 @@ export function unFavorite(_id){
 
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err)
+      toastr.error(err.response.data.message)
     })
   }
 }

@@ -1,6 +1,6 @@
-let isAuthenticated, isAdmin = false;
-localStorage.token ? isAuthenticated = true: isAuthenticated = false;
-localStorage.isAdmin ? isAdmin = true: isAdmin = false;
+let isAuthenticated, isAdmin = false
+localStorage.token ? isAuthenticated = true: isAuthenticated = false
+localStorage.isAdmin ? isAdmin = true: isAdmin = false
 
 let defaultState = {
     isAuthenticated,
