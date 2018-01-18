@@ -48,8 +48,11 @@ function riverSort(a, b){
 
 function handleFavorites(favorites, rivers){
   const mappedFavorites = favorites.map(({stream, upperParam, lowerParam, _id})=>{
+    if(stream._id){
+      stream = stream._id
+    }
     return {
-      stream: stream._id,
+      stream,
       upperParam,
       lowerParam,
       updateId: _id
@@ -64,7 +67,7 @@ function riversReducer(rivers = [], action) {
     case "LOAD_RIVERS":
       return [...rivers, ...action.rivers]
     case "FAVORITE":
-      return handleFavorites(action.favorites, rivers) || rivers
+      return handleFavorites(action.favorites, rivers).sort(riverSort) || rivers
     case "UN_FAVORITE":
       const updatedRivers = rivers.map(river=>{
         if (river._id === action.favoriteToRemove){
@@ -72,20 +75,11 @@ function riversReducer(rivers = [], action) {
         }
         return river
       })
-      return updatedRivers || rivers
+      return updatedRivers.sort(riverSort) || rivers.sort(riverSort)
     case "LOGIN":
       return handleFavorites(action.favorites, rivers) || rivers
     case "LOAD_FAVORITES":
-      const favorites = action.favorites.map(({stream, upperParam, lowerParam, _id})=>{
-        return {
-          stream: stream._id,
-          upperParam,
-          lowerParam,
-          updateId: _id
-        }
-      })
-      const combinedAndMappedRivers = combineFavoritesAndRivers(favorites, rivers)
-      return combinedAndMappedRivers || rivers
+      return handleFavorites(action.favorites, rivers) || rivers
     case "UPDATE_FLOW":
       const index = rivers.findIndex(river=>river.apiId === action.id)
       const riversCopy = [...rivers]

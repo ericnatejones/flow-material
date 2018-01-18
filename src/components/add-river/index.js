@@ -35,9 +35,10 @@ class AddRiverContainer extends Component {
           input={this.state.input}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          isAdmin={this.props.user.isAdmin}
         />
     )
   }
 }
 
-export default connect(null, { submitRiver }) (AddRiverContainer);
+export default connect(state => state, { submitRiver }) (AddRiverContainer);

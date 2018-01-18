@@ -72,7 +72,7 @@ export function unFavorite(_id){
     })
     .catch((err) => {
       console.error(err)
-      toastr.error(err.response.data.message)
+      toastr.error(err.message)
     })
   }
 }
@@ -83,10 +83,19 @@ export function submitRiver({url, knownTitle}){
 
     axios.post(`${baseURL}stream/`, {site, knownTitle})
     .then(response=>{
+      toastr.success("river added!", "Log in and click it to favorite it")
       dispatch({
           type: "ADD_RIVER",
-          river: response.data,
+          river: {
+            ...response.data,
+            knownTitle: knownTitle || response.data.apiTitle,
+            isFavorited: false
+          }
       });
+    })
+    .catch((err) => {
+      console.error(err)
+      toastr.error("river already in database")
     })
   }
 }

@@ -14,6 +14,15 @@ export default function AddRiverForm(props){
           onChange={props.handleChange}
           value={props.input}
         />
+      {props.isAdmin && 
+          <TextField
+            floatingLabelText="Enter runs common name"
+            hintText="Snake River Canyon Above Alpine, WY"
+            fullWidth={true}
+            name="knownTitle"
+            onChange={props.handleChange}
+            value={props.knownTitle}
+          />}
       <RaisedButton type="submit" label={props.buttonText} primary={true} />
       </form>
     </div>
